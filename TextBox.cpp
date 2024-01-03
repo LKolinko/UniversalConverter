@@ -21,7 +21,7 @@ void TextBox::Draw_To(sf::RenderWindow& wnd) {
 void TextBox::SetTitle(sf::Font &font, std::string& str) {
     title.setString(str);
     title.setFillColor(sf::Color::Black);
-    title.setCharacterSize((back.getLocalBounds().width / 2 + back.getLocalBounds().height) / 15);
+    title.setCharacterSize(back.getLocalBounds().height / 3.5);
     title.setFont(font);
     title.setPosition(back.getPosition());
 }
