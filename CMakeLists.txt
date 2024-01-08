@@ -1,14 +1,18 @@
-cmake_minimum_required(VERSION 3.26)
-project(untitled)
+cmake_minimum_required(VERSION 3.26.4)
+project(UniversalConverter)
 
-set(CMAKE_CXX_STANDARD 20)
+include(FetchContent)
+FetchContent_Declare(SFML
+        GIT_REPOSITORY https://github.com/SFML/SFML.git
+        GIT_TAG 2.6.x)
+FetchContent_MakeAvailable(SFML)
 
-find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(untitled main.cpp
+add_executable(UniversalConverter main.cpp
         BigInteger.h
         BigInteger.cpp
-        Fractiron.h
+        Fraction.h
         Fraction.cpp
         Button.h
         Screen.h
@@ -16,6 +20,7 @@ add_executable(untitled main.cpp
         TextBox.h
         TextBox.cpp
         FileManager.h
-        FileManager.cpp)
+        FileManager.cpp
+        TextBox.cpp)
 
-target_link_libraries(untitled sfml-graphics sfml-audio)
+target_link_libraries(UniversalConverter PRIVATE sfml-graphics)
