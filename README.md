@@ -45,7 +45,7 @@ You have access to file input and output
 
 4) Use cmake
 
-   `cd ./DNFMinimizer`
+   `cd ./UniversalConverter`
 
    `cmake .`
 
