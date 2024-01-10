@@ -41,19 +41,23 @@ You have access to file input and output
 
 1) Clone the repo
 
-   `git clone https://github.com/LKolinko/UniversalConverter`
+   ```bash
+   git clone https://github.com/LKolinko/UniversalConverter
+   ```
 
 4) Use cmake
 
-   `cd ./UniversalConverter`
-
-   `cmake .`
-
-   `cmake --build ./`
+   ```bash
+   cd ./UniversalConverter`
+   cmake .
+   cmake --build ./
+   ```
 
 3) Launch and enjoy :)
 
-   `./UniversalConverter`
+   ```bash
+   ./UniversalConverter
+   ```
 
 ## Screenshots
 
