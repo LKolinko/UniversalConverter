@@ -1,6 +1,4 @@
 #pragma once
-#pragma GCC optimaze("O3");
-#pragma GCC target("avx2")
 #include <vector>
 #include <iostream>
 #include <algorithm>
