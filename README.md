@@ -48,7 +48,7 @@ You have access to file input and output
 4) Use cmake
 
    ```bash
-   cd ./UniversalConverter`
+   cd ./UniversalConverter
    cmake .
    cmake --build ./
    ```
