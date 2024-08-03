@@ -10,17 +10,17 @@ FetchContent_MakeAvailable(SFML)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(UniversalConverter main.cpp
-        BigInteger.h
-        BigInteger.cpp
-        Fraction.h
-        Fraction.cpp
-        Button.h
-        Screen.h
-        Singleton.h
-        TextBox.h
-        TextBox.cpp
-        FileManager.h
-        FileManager.cpp
-        TextBox.cpp)
+        core/BigInteger.h
+        src/BigInteger.cpp
+        core/Fraction.h
+        src/Fraction.cpp
+        app/Button.h
+        app/Screen.h
+        app/Singleton.h
+        app/TextBox.h
+        src/TextBox.cpp
+        app/FileManager.h
+        src/FileManager.cpp
+        src/TextBox.cpp)
 
 target_link_libraries(UniversalConverter PRIVATE sfml-graphics)

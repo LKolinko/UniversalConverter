@@ -1,8 +1,8 @@
-#include "Fraction.h"
-#include "Screen.h"
-#include "Button.h"
-#include "TextBox.h"
-#include "FileManager.h"
+#include "core/Fraction.h"
+#include "app/Screen.h"
+#include "app/Button.h"
+#include "app/TextBox.h"
+#include "app/FileManager.h"
 #include <thread>
 #include <memory>
 

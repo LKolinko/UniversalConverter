@@ -1,4 +1,4 @@
-#include "Fraction.h"
+#include "../core/Fraction.h"
 
 BigInteger Fraction::gcd(BigInteger a, BigInteger b) {
     BigInteger null = a - a;

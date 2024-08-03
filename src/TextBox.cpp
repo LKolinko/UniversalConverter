@@ -1,4 +1,4 @@
-#include "TextBox.h"
+#include "../app/TextBox.h"
 void TextBox::SetSize(sf::Vector2f size) {
     std::lock_guard<std::mutex> lock(mutex);
     back.setSize(size);
