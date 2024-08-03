@@ -3,6 +3,8 @@
 #include "Button.h"
 #include "TextBox.h"
 #include "FileManager.h"
+#include <thread>
+#include <memory>
 
 std::string solve(std::string& str_whole, std::string& str_fractional, std::string& str_period, int p, int q) {
     std::string translate;
@@ -74,9 +76,10 @@ std::string solve(std::string& str_whole, std::string& str_fractional, std::stri
     return translate;
 }
 // функция для button
-void onclick(TextBox& enter1, TextBox& enter2, TextBox& enter3, TextBox& out) {
-    std::string p = enter2.get_text(), q = enter3.get_text();
-    std::string number = enter1.get_text();
+void onclick(std::shared_ptr<TextBox> enter1, std::shared_ptr<TextBox> enter2, 
+            std::shared_ptr<TextBox> enter3, std::shared_ptr<TextBox> out) {
+    std::string p = enter2->get_text(), q = enter3->get_text();
+    std::string number = enter1->get_text();
     std::string str_whole, str_fractional, str_period;
     if (q.empty() || p.empty()) {
         return;
@@ -98,7 +101,7 @@ void onclick(TextBox& enter1, TextBox& enter2, TextBox& enter3, TextBox& out) {
             str_whole += i;
         }
     }
-    out.set_text(solve(str_whole, str_fractional, str_period, std::stoi(p), std::stoi(q)));
+    out->set_text(solve(str_whole, str_fractional, str_period, std::stoi(p), std::stoi(q)));
 }
 
 int main() {
@@ -109,26 +112,26 @@ int main() {
     sf::Text title;
     Button btn;
     Button btn2;
-    TextBox enter1;
-    TextBox enter2;
-    TextBox enter3;
-    TextBox out;
+    std::shared_ptr<TextBox> enter1 = std::make_shared<TextBox>();
+    std::shared_ptr<TextBox> enter2 = std::make_shared<TextBox>();
+    std::shared_ptr<TextBox> enter3 = std::make_shared<TextBox>();
+    std::shared_ptr<TextBox> out = std::make_shared<TextBox>();
 
     font.loadFromFile("3270NerdFontMono-Regular.ttf");
     title.setFont(font);
-    enter1.SetFont(font);
-    enter2.SetFont(font);
-    enter3.SetFont(font);
-    out.SetFont(font);
+    enter1->SetFont(font);
+    enter2->SetFont(font);
+    enter3->SetFont(font);
+    out->SetFont(font);
 
     sf::Vector2f size;
     size = { (float)wnd->getSize().x / (float)1.1, (float)wnd->getSize().y / (float)8 };
 
     title.setCharacterSize(35);
-    enter1.SetSize(size);
-    enter2.SetSize(size);
-    enter3.SetSize(size);
-    out.SetSize(size);
+    enter1->SetSize(size);
+    enter2->SetSize(size);
+    enter3->SetSize(size);
+    out->SetSize(size);
     btn.SetSize({size.x / (float) 2.1, size.y});
     btn2.SetSize({size.x / (float) 2.1, size.y});
 
@@ -138,38 +141,39 @@ int main() {
 
     btn.SetPosition({(float) wnd->getSize().x * (float) 0.53, (float) wnd->getSize().y * (float) 0.85});
     btn2.SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.85});
-    out.SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.7});
-    enter3.SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.55});
-    enter2.SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.4});
-    enter1.SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.25});
+    out->SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.7});
+    enter3->SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.55});
+    enter2->SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.4});
+    enter1->SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.25});
     title.setPosition({ (float)wnd->getSize().x * (float)0.5 - title.getLocalBounds().width / 2, (float)wnd->getSize().y * (float).1 });
 
     btn.SetBackColor(sf::Color(141, 159, 135));
     btn2.SetBackColor(sf::Color(141, 159, 135));
-    enter1.SetBackColor(sf::Color(205, 198, 165));
-    enter2.SetBackColor(sf::Color(205, 198, 165));
-    enter3.SetBackColor(sf::Color(205, 198, 165));
-    out.SetBackColor(sf::Color(205, 198, 165));
+    enter1->SetBackColor(sf::Color(205, 198, 165));
+    enter2->SetBackColor(sf::Color(205, 198, 165));
+    enter3->SetBackColor(sf::Color(205, 198, 165));
+    out->SetBackColor(sf::Color(205, 198, 165));
     title.setFillColor(sf::Color::Black);
 
     std::string TextBoxName = "enter number:";
-    enter1.SetTitle(font, TextBoxName);
+    enter1->SetTitle(font, TextBoxName);
     TextBoxName = "enter p:";
-    enter2.SetTitle(font, TextBoxName);
+    enter2->SetTitle(font, TextBoxName);
     TextBoxName = "enter q:";
-    enter3.SetTitle(font, TextBoxName);
+    enter3->SetTitle(font, TextBoxName);
     TextBoxName = "result:";
-    out.SetTitle(font, TextBoxName);
+    out->SetTitle(font, TextBoxName);
 
     while (wnd->isOpen()) {
 
         sf::Event event{};
 
         while (wnd->pollEvent(event)) {
-            enter1.enter(event);
-            enter2.enter(event);
-            enter3.enter(event);
-            out.enter(event);
+
+            enter1->enter(event);
+            enter2->enter(event);
+            enter3->enter(event);
+            out->enter(event);
 
             // resize window
             if (event.type == sf::Event::Resized) {
@@ -177,10 +181,10 @@ int main() {
                 wnd->setView(sf::View(sf::Vector2f((float)windowSize.x / 2.f,(float)windowSize.y / 2.f), sf::Vector2f(windowSize)));
                 size = { (float)wnd->getSize().x / (float)1.1, (float)wnd->getSize().y / (float)8 };
 
-                enter1.SetSize(size);
-                enter2.SetSize(size);
-                enter3.SetSize(size);
-                out.SetSize(size);
+                enter1->SetSize(size);
+                enter2->SetSize(size);
+                enter3->SetSize(size);
+                out->SetSize(size);
                 btn.SetSize({size.x / (float) 2.1, size.y});
                 btn2.SetSize({size.x / (float) 2.1, size.y});
 
@@ -189,62 +193,63 @@ int main() {
                 btn.SetPosition({(float) wnd->getSize().x * (float) 0.05 + Button_shift,
                                  (float) wnd->getSize().y * (float) 0.85});
                 btn2.SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.85});
-                out.SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.7});
-                enter3.SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.55});
-                enter2.SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.4});
-                enter1.SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.25});
+                out->SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.7});
+                enter3->SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.55});
+                enter2->SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.4});
+                enter1->SetPosition({(float) wnd->getSize().x * (float) 0.05, (float) wnd->getSize().y * (float) 0.25});
                 title.setPosition({ (float)wnd->getSize().x * (float)0.5 - title.getLocalBounds().width / 2, (float)wnd->getSize().y * (float).1 });
 
                 std::string str = "enter number:";
-                enter1.SetTitle(font, str);
+                enter1->SetTitle(font, str);
                 str = "enter p:";
-                enter2.SetTitle(font, str);
+                enter2->SetTitle(font, str);
                 str = "enter q:";
-                enter3.SetTitle(font, str);
+                enter3->SetTitle(font, str);
                 str = "result:";
-                out.SetTitle(font, str);
+                out->SetTitle(font, str);
                 btn.SetText("Translate", sf::Color::Black, font);
                 btn2.SetText("FileManager", sf::Color::Black, font);
 
-                enter1.text_size();
-                enter2.text_size();
-                enter3.text_size();
-                out.text_size();
+                enter1->text_size();
+                enter2->text_size();
+                enter3->text_size();
+                out->text_size();
             }
             if (event.type == sf::Event::Closed) {
                 wnd->close();
             }
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !FileManader::GetInstance()->is_open()) {
-                enter1.setActive(enter1.isMousOver(*wnd));
-                enter2.setActive(enter2.isMousOver(*wnd));
-                enter3.setActive(enter3.isMousOver(*wnd));
-                out.setActive(out.isMousOver(*wnd));
+                enter1->setActive(enter1->isMousOver(*wnd));
+                enter2->setActive(enter2->isMousOver(*wnd));
+                enter3->setActive(enter3->isMousOver(*wnd));
+                out->setActive(out->isMousOver(*wnd));
             }
         }
         wnd->clear(sf::Color::White);
         if (btn.isMouseOver(*wnd) && !FileManader::GetInstance()->is_open()) {
-            enter1.SetStart();
-            enter2.SetStart();
-            enter3.SetStart();
-            out.SetStart();
-            onclick(enter1, enter2, enter3, out);
+            enter1->SetStart();
+            enter2->SetStart();
+            enter3->SetStart();
+            out->SetStart();
+            std::thread t(onclick, enter1, enter2, enter3, out);
+            t.detach();
         }
         if (btn2.isMouseOver(*wnd) && !FileManader::GetInstance()->is_open()) {
-            std::string res = out.get_text();
+            std::string res = out->get_text();
             FileManader::GetInstance()->SetOutput(res);
             FileManader::GetInstance()->open(font);
         } else {
             std::string fileinput = FileManader::GetInstance()->getInput();
             if (!fileinput.empty()) {
-                enter1.set_text(fileinput);
+                enter1->set_text(fileinput);
             }
         }
         btn.Draw_To(*wnd);
         btn2.Draw_To(*wnd);
-        enter1.Draw_To(*wnd);
-        enter2.Draw_To(*wnd);
-        enter3.Draw_To(*wnd);
-        out.Draw_To(*wnd);
+        enter1->Draw_To(*wnd);
+        enter2->Draw_To(*wnd);
+        enter3->Draw_To(*wnd);
+        out->Draw_To(*wnd);
         wnd->draw(title);
         wnd->display();
         if (FileManader::GetInstance()->is_open()) {

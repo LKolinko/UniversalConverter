@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <mutex>
 
 class TextBox {
 public:
@@ -18,6 +19,7 @@ public:
     void text_size();
     void SetStart();
 private:
+    std::mutex mutex;
     int start = 0;
     int TextBoxWidth;
     int TextBoxHeight;
